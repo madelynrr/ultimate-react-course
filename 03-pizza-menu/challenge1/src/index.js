@@ -3,12 +3,18 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 
 const skills = [
-  { name: "HTML+CSS", emoji: "👶", bgColor: "red" },
-  { name: "JavaScript", emoji: "💪", bgColor: "yellow" },
-  { name: "Web Design", emoji: "👍", bgColor: "blue" },
-  { name: "Tailwind", emoji: "💪", bgColor: "green" },
-  { name: "Ruby on Rails", emoji: "💪", bgColor: "purple" },
+  { name: "HTML+CSS", emoji: "beginner", bgColor: "red" },
+  { name: "JavaScript", emoji: "advanced", bgColor: "yellow" },
+  { name: "Web Design", emoji: "intermediate", bgColor: "blue" },
+  { name: "Tailwind", emoji: "advanced", bgColor: "green" },
+  { name: "Ruby on Rails", emoji: "advanced", bgColor: "purple" },
 ];
+
+const emojiLevels = {
+  beginner: "👶",
+  intermediate: "👍",
+  advanced: "💪",
+};
 
 function App() {
   return (
@@ -52,7 +58,11 @@ function SkillList() {
   return (
     <div className="skill-list">
       {skills.map((skill) => (
-        <Skill name={skill.name} emoji={skill.emoji} color={skill.bgColor} />
+        <Skill
+          name={skill.name}
+          emoji={emojiLevels[skill.emoji]}
+          color={skill.bgColor}
+        />
       ))}
     </div>
   );
