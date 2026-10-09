@@ -66,41 +66,93 @@ function Header() {
 }
 
 function Menu() {
+  const pizzas = pizzaData;
+  const numPizzas = pizzas.length;
+  //   const numPizzas = 0;
+
   return (
     <main className="menu">
       <h2>Our Menu</h2>
-      {pizzaData.map((pizza) => (
-        <Pizza info={pizza} />
-      ))}
+      {numPizzas > 0 ? (
+        <ul className="pizzas ">
+          {pizzaData.map((pizza) => (
+            <Pizza pizzaObj={pizza} key={pizza.name} />
+          ))}
+        </ul>
+      ) : (
+        <p>Still working on our menu!</p>
+      )}
     </main>
   );
 }
 
-function Pizza({ info }) {
+function Pizza({ pizzaObj }) {
   return (
-    <div className="pizza">
-      <img src={info.photoName} alt={info.name}></img>
+    <li className="pizza">
+      <img src={pizzaObj.photoName} alt={pizzaObj.name}></img>
       <div>
-        <h3>{info.name}</h3>
-        <p>{info.ingredients}</p>
-        <span>{info.price}</span>
+        <h3>{pizzaObj.name}</h3>
+        <p>{pizzaObj.ingredients}</p>
+        <span>{pizzaObj.price}</span>
       </div>
+    </li>
+  );
+}
+
+function checkIfOpen(openHour, closeHour) {
+  const hour = new Date().getHours();
+
+  return hour >= openHour && hour <= closeHour;
+}
+
+function Order({ closeHour }) {
+  return (
+    <div className="order">
+      <p>We're open until {closeHour}:00, come on by!</p>
+      <button className="btn">Order</button>
     </div>
   );
 }
 
 function Footer() {
-  const hour = new Date().getHours();
   const openHour = 12;
   const closeHour = 22;
-  const isOpen = hour >= openHour && hour <= closeHour;
+  const isOpen = checkIfOpen(openHour, closeHour);
 
   return (
     <footer className="footer">
-      {new Date().toLocaleTimeString()}: We're currently open!
+      {isOpen ? (
+        <Order closeHour={closeHour} />
+      ) : (
+        <p>We open at {openHour}:00, come say hi!</p>
+      )}
     </footer>
   );
 }
+
+// function checkIfOpen() {
+//   const hour = new Date().getHours();
+//   const openHour = 12;
+//   const closeHour = 22;
+
+//   const isOpen = hour >= openHour && hour <= closeHour;
+
+//   if (isOpen) {
+//     return (
+//       <div className="order">
+//         <p>We're open until {closeHour}:00, come on by!</p>
+//         <button className="btn">Order</button>
+//       </div>
+//     );
+//   } else {
+//     return <p>We open at {openHour}:00, come say hi!</p>;
+//   }
+// }
+// function Footer() {
+//   const footer = checkIfOpen();
+
+//   return <footer className="footer">{footer}</footer>;
+// }
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
